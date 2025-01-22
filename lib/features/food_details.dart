@@ -18,7 +18,6 @@ class _FoodDetailsState extends State<FoodDetails> {
     return SafeArea(
       child: Scaffold(
         body: Stack(children: [
-          const SizedBox(height:1000),
           Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
@@ -26,6 +25,7 @@ class _FoodDetailsState extends State<FoodDetails> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+               const SizedBox(height: 150,),
                 Image.network(widget.item.imgUrl),
                 Text(widget.item.name,
                     style:
