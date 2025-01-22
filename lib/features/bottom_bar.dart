@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/features/fav.dart';
 import 'package:food_delivery/features/home_page.dart';
 
 import '../core/widgets/custom_app_bar.dart';
@@ -14,7 +15,7 @@ class _BottomBarState extends State<BottomBar> {
   int selectedIndex = 0;
   List<Widget> bodyOptions = [
     HomePage(),
-    const Center(child: Text("Fav")),
+    FavScreen(),
     const Center(
       child: Text("Profile"),
     )
@@ -22,9 +23,8 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-        drawer: const Drawer(),
-        appBar: const CustomAppBar(),
+      drawer: const Drawer(),
+      appBar: const CustomAppBar(),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedIndex,
           onTap: (value) {

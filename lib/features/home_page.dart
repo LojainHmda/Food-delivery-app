@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/models/categories_model.dart';
 import 'package:food_delivery/core/models/productes.dart';
+import 'package:food_delivery/features/food_details.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -8,6 +9,7 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
 class _HomePageState extends State<HomePage> {
   String? selectedcategoryId;
 
@@ -43,7 +45,10 @@ class _HomePageState extends State<HomePage> {
                       onTap: () {
                         setState(() {
                           selectedcategoryId = categories[index].id;
-                          filteredFood = food.where((element) => element.category.id == selectedcategoryId ).toList();
+                          filteredFood = food
+                              .where((element) =>
+                                  element.category.id == selectedcategoryId)
+                              .toList();
                         });
                       },
                       child: Container(
@@ -89,20 +94,57 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: Colors.orange[100]),
-                  child: Column(
-                    children: [
-                      Image.network(
-                        filteredFood[index].imgUrl,
-                        height: 130,
-                        width: 130,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            FoodDetails(item: filteredFood[index]),
                       ),
-                      Text(filteredFood[index].name),
-                      Text("${filteredFood[index].price}"),
-                    ],
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.orange[100]),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Positioned(
+                          right: -5,
+                          child: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  filteredFood[index].isFav =
+                                      !filteredFood[index].isFav;
+                                  if (filteredFood[index].isFav) {
+                                    favFood.add(filteredFood[index]);
+                                  }
+                                });
+                              },
+                              icon: Icon(
+                                filteredFood[index].isFav
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: filteredFood[index].isFav
+                                    ? Colors.red
+                                    : Colors.black,
+                              )),
+                        ),
+                        Column(
+                          children: [
+                            Image.network(
+                              filteredFood[index].imgUrl,
+                              height: 130,
+                              width: 130,
+                            ),
+                            Text(filteredFood[index].name),
+                            Text("${filteredFood[index].price}"),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

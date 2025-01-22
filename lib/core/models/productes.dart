@@ -2,18 +2,24 @@ import 'package:food_delivery/core/models/categories_model.dart';
 
 class ProductsModel {
   final String id;
+  final String description;
+  bool isFav;
+
   final String name;
   final double price;
   final String imgUrl;
   final CategoryModel category;
 
   ProductsModel(
-      {required this.id,
+      {this.description = "this is the description ",
+      this.isFav = false,
+      required this.id,
       required this.name,
       required this.price,
       required this.imgUrl,
       required this.category});
 }
+List<ProductsModel> favFood = [];
 List<ProductsModel> food = [
   ProductsModel(
     id: '1',
